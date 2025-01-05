@@ -1,34 +1,32 @@
-document.querySelectorAll('img').forEach(img => {
-    img.ondragstart = () => false;
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const homeSection = document.getElementById("home");
-    const infoSection = document.getElementById("information");
-    const homeLink = document.querySelector('a[href="#home"]');
-    const infoLink = document.querySelector('a[href="informatie.html"]');
-
-    homeSection.classList.add("active");
-    infoSection.classList.add("inactive");
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('matchModal');
+    const closeModal = document.querySelector('.close');
 
 
-    function showSection(sectionToShow, sectionToHide) {
-
-        sectionToShow.classList.remove("inactive");
-        sectionToShow.classList.add("active");
-
-        sectionToHide.classList.add("inactive");
-        sectionToHide.classList.remove("active");
+    function openModal(fighterName, matchDetails) {
+        document.getElementById('modalFighterName').innerText = fighterName;
+        document.getElementById('modalMatchDetails').innerText = matchDetails;
+        modal.style.display = 'block';
     }
 
 
-    homeLink.addEventListener("click", function() {
-        showSection(homeSection, infoSection);
-    });
+    closeModal.onclick = function() {
+        modal.style.display = 'none';
+    }
 
- 
-    infoLink.addEventListener("click", function() {
-        showSection(infoSection, homeSection);
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+
+    const fighters = document.querySelectorAll('.fighter h3, .fighter img');
+    fighters.forEach(fighter => {
+        fighter.addEventListener('click', function() {
+            const fighterName = this.innerText;
+            const matchDetails = "Details over de match gaan hier";
+            openModal(fighterName, matchDetails);
+        });
     });
 });
-
